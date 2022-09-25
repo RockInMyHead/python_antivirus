@@ -41,7 +41,7 @@ def scan(path):
         my_iteration += 1
         file_signature.append(md5hash_hexdigest)
     #print (first_pack)
-    #print (file_signature)
+    print (file_signature)
     return file_signature
 #s = scan('C:/Users/p_k12/test1/dist/One.exe')
 #print (s)

@@ -1,0 +1,47 @@
+from audioop import add
+from email.mime import image
+import requests
+import hashlib
+from inspect import signature
+import time
+from tkinter import *
+from tkinter.filedialog import askopenfilename
+import pprint
+
+#from * import signatyre
+import signatyre
+
+signature_dict = signatyre.create_signature() # сигнатрура вирусов
+#print (signature_dict)
+skan_virus_name = ["virus_1","virus_2","virus_3","virus_4"]
+
+def scan(path):
+    with open (path, "rb") as f:
+        bytes = f.read()
+    new_bytes = str(bytes).replace('\\x','')
+    new_bytes = new_bytes.replace(' ','')
+    len = 0
+    a = 0
+    file_signature = []
+    my_iteration = 0
+    for item in new_bytes: # Считаем колличесвто символов
+        len+=1
+    #print ("Элементов: " + str(len))
+    iteration = len / 32768 # Считаем колличество блоков по 512 знаков
+    iteration = int(iteration) + 1 # Округляем, +1 для округления в большую сторону
+    #print ("Колличество реальных итераций: " + str(iteration))
+    while my_iteration < iteration:
+        a+=1
+        #print (a)
+        first_pack = "".join(new_bytes[:32768])
+        new_bytes = new_bytes[32768:]
+        md5hash = hashlib.md5(first_pack.encode())
+        md5hash_hexdigest = md5hash.hexdigest()
+        #print (md5hash.hexdigest())
+        my_iteration += 1
+        file_signature.append(md5hash_hexdigest)
+    #print (first_pack)
+    #print (file_signature)
+    return file_signature
+s = scan('C:/Users/p_k12/test1/dist/One.exe')
+print (s)
